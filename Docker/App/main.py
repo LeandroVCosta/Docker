@@ -144,56 +144,5 @@ while (i < 5):
             print('Disco: Uso médio (estável).')
         else:
             print('Disco: Alto uso, pode ser um risco!')
-            
-matplotlib.pyplot.title('Porcentagem de uso da CPU')
-matplotlib.pyplot.xlabel('Numero de Identificação do Dado')
-matplotlib.pyplot.ylabel('Porcentagem')
-matplotlib.pyplot.plot(medida, dados_cpu)
-matplotlib.pyplot.ylim(0, 100)
-matplotlib.pyplot.show()
-dados_cpu = []
-
-print("-"*30)
-print("\n")
-
-matplotlib.pyplot.title('Porcentagem de uso da RAM')
-matplotlib.pyplot.xlabel('Numero de Identificação do Dado')
-matplotlib.pyplot.ylabel('Porcentagem')
-matplotlib.pyplot.plot(medida, dados_ram)
-matplotlib.pyplot.ylim(0, 100)
-matplotlib.pyplot.show()
-dados_ram = []
-
-print("-"*30)
-print("\n")
-        
-matplotlib.pyplot.title('Porcentagem de uso do HD')
-matplotlib.pyplot.xlabel('Numero de Identificação do Dado')
-matplotlib.pyplot.ylabel('Porcentagem')
-matplotlib.pyplot.plot(medida, dados_hd)
-matplotlib.pyplot.ylim(0, 100)
-matplotlib.pyplot.show()
-dados_hd = []
-medida = []
-
-print("-"*30)
-print("\n")
-
-medias_cpu.append(ai)
-print(medias_cpu)
-x=[fkCaixa,fkCaixa2,fkCaixa3]
-plt.bar(x, medias_cpu[0] , color ='yellow',
-        width = 0.4) 
-plt.xlabel("Id Caixa")
-plt.ylabel("Porcentagem de média")
-plt.title("Média de uso da CPU por máquina")
-plt.ylim(0, 100)
-plt.show()
-medias_cpu=[]
-
-print("\n")            
-
-print("-"*30)
-print("\n")
         
 time.sleep(3.0)
