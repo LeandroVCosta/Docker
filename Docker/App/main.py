@@ -7,26 +7,34 @@ import datetime
 import platform
 import matplotlib.pyplot
 import matplotlib.pyplot as plt
+import mysql.connector
 import sys,os
 
 
+try:
+ server = 'trackvisiondb.database.windows.net'
+ database = 'trackvisiondb'
+ username = 'CloudSA49c766d4'
+ password = 'Urubu1004'
+ driver= '{ODBC Driver 18 for SQL Server}'
 
-server = 'trackvisiondb.database.windows.net'
-database = 'trackvisiondb'
-username = 'CloudSA49c766d4'
-password = 'Urubu1004'
-driver= '{ODBC Driver 18 for SQL Server}'
-
-conn = pyodbc.connect('DRIVER='+driver+';'
+ conn = pyodbc.connect('DRIVER='+driver+';'
                           'SERVER=tcp:'+server+';'
                           'PORT=1433;'
                           'DATABASE='+database+';'
                           'UID='+username+';'
                           'PWD='+ password)
 
-cursor = conn.cursor()
-
+ cursor = conn.cursor()
+ print("Conectei ao Azure")
+except:
+    pass
 #fkCaixa = int(input("Informe o código do caixa: "))
+
+mysqlconn = mysql.connector.connect(
+        host='localhost:3306', user='root', password='urubu100', database='trackvision')
+print("Conexão ao banco estabelecida!")
+mysqlcursor = mysqlconn.cursor()
 fkAgencia = int(input("Informe o seu código da sua Agência: "))
 
 
@@ -105,6 +113,8 @@ while (i < 5):
         values = [computador[0], computador[1], computador[2], computador[3]]
         cursor.execute(sql, values)
         cursor.commit()
+        mysqlcursor.execute(sql, values)
+        mysqlcursor.commit()
         sopera = platform.system()
 
         
