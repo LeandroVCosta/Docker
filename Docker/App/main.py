@@ -5,13 +5,31 @@ import psutil
 import time
 import datetime
 import platform
-import matplotlib.pyplot
-import matplotlib.pyplot as plt
-import pymysql
-import sys,os
+import mysql.connector
 
-mysqlconn = pymysql.connect(
-         user='root', password='urubu100', database='trackvision', host='172.25.240.1', port = 3305
+
+conexao = False
+try:
+
+  server = 'trackvisiondb.database.windows.net'
+  database = 'trackvisiondb'
+  username = 'CloudSA49c766d4'
+  password = 'Urubu1004'
+  driver= '{ODBC Driver 18 for SQL Server}'
+
+  conn = pyodbc.connect('DRIVER='+driver+';'
+                          'SERVER=tcp:'+server+';'
+                          'PORT=1433;'
+                          'DATABASE='+database+';'
+                          'UID='+username+';'
+                          'PWD='+ password)
+
+  cursor = conn.cursor()
+  conexao = True
+except:
+    pass
+mysqlconn = mysql.connector.connect(
+         user='root', password='urubu100', database='trackvision', host='172.17.0.2', port = 3306
          )
 print("Conexão ao banco estabelecida!")
 mysqlcursor = mysqlconn.cursor()
@@ -88,13 +106,15 @@ while (i < 5):
         
     
     for count, computador in enumerate(maquinas):
-        sql = "INSERT INTO Leitura (fkBanco, fkAgencia, fkCaixa, cpuPorcentagem, ramPorcentagem, hdPorcentagem, momento) VALUES (1, 1, ?, ?, ?, ?, (GETDATE()))"
         print(computador[0], computador[1], computador[2], computador[3])
         values = [computador[0], computador[1], computador[2], computador[3]]
-        # cursor.execute(sql, values)
-        # cursor.commit()
-        mysqlcursor.execute(sql, values)
-        mysqlcursor.commit()
+        if conexao:
+         sql = "INSERT INTO Leitura (fkBanco, fkAgencia, fkCaixa, cpuPorcentagem, ramPorcentagem, hdPorcentagem, momento) VALUES (1, 1, ?, ?, ?, ?, (GETDATE()))"
+         cursor.execute(sql, values)
+         cursor.commit()
+        mysqlsintax = "INSERT INTO Leitura (fkBanco, fkAgencia, fkCaixa, cpuPorcentagem, ramPorcentagem, hdPorcentagem, momento) VALUES (1, 1, %s, %s, %s, %s, (SELECT Now()))"
+        mysqlcursor.execute(mysqlsintax, values)
+        mysqlconn.commit()
         sopera = platform.system()
 
         
